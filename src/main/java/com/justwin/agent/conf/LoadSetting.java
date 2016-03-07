@@ -1,25 +1,28 @@
 package com.justwin.agent.conf;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Map.Entry;
 import java.util.Properties;
 
-public class LoadSetting extends MapSetting {
+public class LoadSetting implements Setting {
 
 	private String path = null;
+	private MapSetting setting;
 
 	public LoadSetting(String path) {
-		super();
+		this.setting = new MapSetting();
 		this.path = path;
 	}
 	
 	public Setting load() {
-		// TODO load properties
 		// put(name, value);
-		InputStream in = getClass().getClassLoader().getResourceAsStream(path);
-		
-		if (in == null) {
-			throw new IllegalArgumentException("Not found properties file, file: " + path);
+		FileInputStream in;
+		try {
+			in = new FileInputStream(path);
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException("Not found properties file, file: " + path, e);
 		}
 		
 		Properties properties = new Properties();
@@ -36,7 +39,17 @@ public class LoadSetting extends MapSetting {
 				throw new RuntimeException("Properties close failed, file: " + path, e);
 			}
 		}
-		return this;
+		
+		for (Entry<Object, Object> entry : properties.entrySet()) {
+			setting.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
+		}
+		
+		return setting;
+	}
+
+	@Override
+	public Object get(String name) {
+		return setting.get(name);
 	}
 	
 }

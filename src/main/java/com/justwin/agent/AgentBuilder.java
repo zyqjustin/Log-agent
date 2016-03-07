@@ -24,8 +24,8 @@ public class AgentBuilder {
 		String agentType = (String)setting.get(AgentConstants.AGENT_TYPE);
 		Class<?> agentClass = AgentEnum.getAgent(agentType);
 		try {
-			Constructor<?> constructor = agentClass.getConstructor(new Class[]{Setting.class});
-			agent = (Agent)constructor.newInstance(new Object[]{setting});
+			Constructor<?> constructor = agentClass.getConstructor(new Class[] { Setting.class });
+			agent = (Agent) constructor.newInstance(new Object[] { setting });
 			agent.report();
 		} catch (Exception e) {
 			_logger.error("Create agent failed...", e);
