@@ -8,6 +8,13 @@ public class AgentRunner {
 	
 	public static void main(String[] args) {
 		_logger.info("Start agent...");
+//		String path = "/Users/justwin/workspace/temp/conf.properties";
+//		try {
+//			AgentBuilder builder = new AgentBuilder(path);
+//			builder.execute();
+//		} catch (Exception e) {
+//			_logger.error("Agent crash...", e);
+//		}
 		if (args[0] != null && args[0] != "") {
 			try {
 				AgentBuilder builder = new AgentBuilder(args[0]);

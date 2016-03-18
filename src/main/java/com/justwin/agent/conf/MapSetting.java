@@ -22,4 +22,10 @@ public class MapSetting implements Setting {
 	public Object put(String name, Object value) {
 		return map.put(name, value);
 	}
+
+	@Override
+	public Object getWithDefault(String name, Object defaultValue) {
+		Object val = map.get(name);
+		return val != null ? val : defaultValue;
+	}
 }

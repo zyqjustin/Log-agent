@@ -1,10 +1,10 @@
-package com.justwin.agent.kafka;
+package com.justwin.agent.kafka.partition;
 
 import java.util.Random;
 
-import kafka.producer.Partitioner;
+import com.justwin.agent.kafka.AbstractPartitioner;
 
-public class ShufflePartitioner implements Partitioner {
+public class ShufflePartitioner extends AbstractPartitioner {
 	
 	private Random random;
 	

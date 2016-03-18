@@ -20,4 +20,20 @@ public class NestedSetting extends MapSetting implements Setting {
 		Object value = super.get(name);
 		return value != null ? value : inner.get(name);
 	}
+	
+	@Override
+	public Object getWithDefault(String name, Object defaultValue) {
+		Object val = super.get(name);
+		if (val != null) {
+			return val;
+		} else {
+			val = inner.get(name);
+		}
+		
+		if (val != null) {
+			return val;
+		} else {
+			return defaultValue;
+		}
+	}
 }

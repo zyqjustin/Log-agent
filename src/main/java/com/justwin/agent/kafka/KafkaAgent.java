@@ -2,7 +2,6 @@ package com.justwin.agent.kafka;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -21,10 +20,24 @@ public class KafkaAgent implements Agent {
 	private final Setting setting;
 	private long lastTimeFileSize = 0;
 	private RandomAccessFile readFile;
+	private KafkaProducer producer;
 	
 	public KafkaAgent(Setting setting) {
-		this.setting = setting;
 		init(setting);
+		this.setting = setting;
+		this.producer = new KafkaProducer(setting, lastTimeFileSize, readFile);
+	}
+
+	public boolean report() {
+		_logger.info("Now begin to collect file content and report to kafka...");
+		
+		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+		executor.scheduleAtFixedRate(producer, 
+				Integer.parseInt((String) setting.get(AgentConstants.KAFKA_AGENT_START_DELAY)),
+				Integer.parseInt((String) setting.get(AgentConstants.KAFKA_AGENT_COLLECT_PERIOD)),
+				TimeUnit.SECONDS);
+	
+		return true;
 	}
 
 	private void init(final Setting agentSetting) {
@@ -36,27 +49,4 @@ public class KafkaAgent implements Agent {
 			throw new IllegalArgumentException("Not find listening file...", e);
 		}
 	}
-
-	public boolean report() {
-		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-		executor.scheduleAtFixedRate(new Runnable() {
-			
-			public void run() {
-				try {
-					readFile.seek(lastTimeFileSize);
-					String content = "";     
-                    while( (content = readFile.readLine()) != null) {     
-                        System.out.println(new String(content.getBytes("ISO-8859-1")));     
-                    }
-                    lastTimeFileSize = readFile.length();
-				} catch (IOException e) {
-					_logger.error("Report file failed, last offset: " + lastTimeFileSize, e);
-				}
-			}
-			
-		}, 0, 2, TimeUnit.SECONDS);
-		
-		return true;
-	}
-
 }

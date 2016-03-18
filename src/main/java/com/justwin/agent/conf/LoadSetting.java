@@ -51,5 +51,11 @@ public class LoadSetting implements Setting {
 	public Object get(String name) {
 		return setting.get(name);
 	}
+
+	@Override
+	public Object getWithDefault(String name, Object defaultValue) {
+		Object val = setting.get(name);
+		return val != null ? val : defaultValue;
+	}
 	
 }
