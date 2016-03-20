@@ -1,11 +1,11 @@
 package com.justwin.agent.kafka;
 
-import kafka.producer.Partitioner;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.Cluster;
 
-public abstract class AbstractPartitioner implements Partitioner {
+public abstract class AbstractPartitioner {
 
-	@Override
-	public abstract int partition(Object obj, int numPartitions);
+	public abstract int partition(ProducerRecord<byte[], byte[]> record, Cluster cluster);
 
 }
  

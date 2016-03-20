@@ -18,14 +18,14 @@ public class KafkaAgent implements Agent {
 	private static final Logger _logger = Logger.getLogger(KafkaAgent.class);
 	
 	private final Setting setting;
-	private long lastTimeFileSize = 0;
+	private long lastTimeFileSize = 0; // TODO sent by last close
 	private RandomAccessFile readFile;
-	private KafkaProducer producer;
+	private KafkaProduceAgent producer;
 	
 	public KafkaAgent(Setting setting) {
 		init(setting);
 		this.setting = setting;
-		this.producer = new KafkaProducer(setting, lastTimeFileSize, readFile);
+		this.producer = new KafkaProduceAgent(setting, lastTimeFileSize, readFile);
 	}
 
 	public boolean report() {

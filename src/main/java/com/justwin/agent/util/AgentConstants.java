@@ -10,7 +10,6 @@ public class AgentConstants {
 	public static final String KAFKA_TOPIC = "kafka.topic";
 	public static final String KAFKA_BROKER_LIST = "kafka.broker.list";
 	public static final String KAFKA_AGENT_START_DELAY = "kafka.agent.start.delay";
-	public static final String KAFKA_SERIALIZER_CLASS = "kafka.serializer.encode.class";
 	public static final String KAFKA_AGENT_COLLECT_PERIOD = "kafka.agent.collect.period";
 	/**
 	 *  0, which means that the producer never waits for an acknowledgement
@@ -31,6 +30,7 @@ public class AgentConstants {
 	 */
 	public static final String KAFKA_REQUEST_REQUIRED_ACKS = "kafka.request.required.acks";
 	public static final String KAFKA_KEY_SERIALIZER_CLASS = "kafka.key.serializer.encode.class";
+	public static final String KAFKA_VALUE_SERIALIZER_CLASS = "kafka.value.serializer.encode.class";
 	
 	public static final int DEFAULT_KAFKA_AGENT_START_DELAY = 0;
 	public static final int DEFAULT_KAFKA_AGENT_COLLECT_PERIOD = 2;
